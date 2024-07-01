@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name', 45);
+            $table->string('address',  250);
+            $table->string('phone', 45);
+            $table->string('email', 45);
+            $table->integer('rating', 10);
+            $table->unsignedBigInteger('type_id');
+            $table->foreign('type_id')->references('id')->on('types');
         });
     }
 

@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductType extends Model
+class Transaction extends Model
 {
     use HasFactory;
-    protected $table = 'product_type';
+    protected $table = 'transaction';
     public $timestamps = false;
 
-    public function products() 
+    public function reservasis() 
     {
-        return $this->hasMany(Product::class, 'product_id');
+        return $this->hasMany(Reservasis::class, 'reservasi_id');
     }
 }
