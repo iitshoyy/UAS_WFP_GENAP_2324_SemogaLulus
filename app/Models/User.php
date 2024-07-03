@@ -17,6 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
         'email',
@@ -42,11 +43,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $table = 'user';
+    protected $table = 'users';
     public $timestamps = false;
 
-    public function reservasis() 
+    public function reservasis()
     {
-        return $this->hasMany(Reservasis::class, 'reservasi_id');
+        return $this->hasMany(Reservasi::class, 'reservasi_id');
     }
 }

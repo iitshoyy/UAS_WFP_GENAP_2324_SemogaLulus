@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Type extends Model
 {
     use HasFactory;
-    protected $table = 'type';
+    protected $table = 'types';
     public $timestamps = false;
 
-    public function hotel() 
+    protected $fillable = [
+        'name',
+    ];
+    public function hotel()
     {
         return $this->hasMany(Hotel::class, 'hotel_id');
     }

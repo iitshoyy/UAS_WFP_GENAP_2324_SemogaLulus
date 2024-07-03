@@ -8,10 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Hotel extends Model
 {
     use HasFactory;
-    protected $table = 'hotel';
+    protected $table = 'hotels';
     public $timestamps = false;
 
-    public function type() 
+    protected $fillable = [
+        'name',
+        'address',
+        'phone',
+        'email',
+        'type_id',
+    ];
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'hotel_id');
+    }
+    public function type()
     {
         return $this->belongsTo(Type::class, 'type_id');
     }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('deskripsi_fasilitas', 45);
             $table->unsignedBigInteger('hotel_id');
             $table->unsignedBigInteger('product_type_id');
-            $table->foreign('hotel_id')->references('id')->on('hotels');
-            $table->foreign('product_type_id')->references('id')->on('product_types');
+            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
+            $table->foreign('product_type_id')->references('id')->on('product_types')->onDelete('cascade');
         });
     }
 

@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $table = 'transaction';
+    protected $table = 'transactions';
     public $timestamps = false;
 
-    public function reservasis() 
+    protected $fillable = [
+        'price',
+        'invoice',
+        'total_price'
+    ];
+    public function reservasis()
     {
-        return $this->hasMany(Reservasis::class, 'reservasi_id');
+        return $this->hasMany(Reservasi::class, 'transaction_id');
     }
 }

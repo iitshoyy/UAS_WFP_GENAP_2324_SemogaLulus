@@ -8,16 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $table = 'product';
+    protected $table = 'products';
     public $timestamps = false;
 
-    public function productType() 
+    protected $fillable = [
+        'name',
+        'price',
+        'nama_fasilitas',
+        'deskripsi_fasilitas',
+        'product_type_id',
+        'hotel_id'
+    ];
+    public function productType()
     {
         return $this->belongsTo(ProductType::class, 'product_type_id');
     }
 
-    public function hotel() 
+    public function hotel()
     {
-        return $this->belongsTo(Type::class, 'type_id');
+        return $this->belongsTo(Hotel::class, 'hotel_id');
     }
 }

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('address',  250);
             $table->string('phone', 45);
             $table->string('email', 45);
-            $table->integer('rating', 10);
+            $table->integer('rating')->default(0);
             $table->unsignedBigInteger('type_id');
-            $table->foreign('type_id')->references('id')->on('types');
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
 

@@ -8,18 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Reservasi extends Model
 {
     use HasFactory;
-    protected $table = 'reservasi';
+    protected $table = 'reservasis';
     public $timestamps = false;
 
-    public function product() 
+    protected $fillable = [
+        'tanggal_jam',
+        'keterangan',
+        'product_id',
+        'transaction_id',
+        'user_id'
+    ];
+    public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
-    public function transaction() 
+    public function transaction()
     {
         return $this->belongsTo(Transaction::class, 'transaction_id');
     }
-    public function user() 
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
