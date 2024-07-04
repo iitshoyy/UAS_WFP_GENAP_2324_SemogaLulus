@@ -46,7 +46,7 @@ Route::prefix('admin')->group(function(){
     Route::post('/editProduk',[AdminController::class,'editProduk'])->name('admin_edit_produk');
 
     Route::get('/dashboard/customer/{id}',[AdminController::class,'getCustomerDetails'])->name('admin_customer_details');
-    Route::get('/dashboard/hotel/{id}',[AdminController::class,'getHotelDetails'])->name('admin_hotel_details');
+    Route::get('/dashboard/phphotel/{id}',[AdminController::class,'getHotelDetails'])->name('admin_hotel_details');
     Route::get('/dashboard/produk/{id}',[AdminController::class,'getProductDetails'])->name('admin_produk_details');
 
     Route::get('/transactions/details',[AdminController::class,'getTransactionDetails'])->name('admin_transaction_details');

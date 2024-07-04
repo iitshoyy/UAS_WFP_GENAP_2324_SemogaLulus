@@ -25,7 +25,7 @@
                                     <div class=""></div>
                                     <p class="card-text">Type: {{ $product->productType->name }}</p>
                                     <p class="card-text">Price: Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                                    <input type="number" class="form-control quantity" name="quantities[{{ $product->id }}]" data-price="{{ $product->price }}" data-product="{{ $product->name }}" min="0" max="1" value="{{ old('quantities.' . $product->id, 0) }}" placeholder="Quantity">
+                                    <input type="number" class="form-control quantity" name="quantities[{{ $product->id }}]" data-price="{{ $product->price }}" data-product="{{ $product->name }}" min="0" max="10" value="{{ old('quantities.' . $product->id, 0) }}" placeholder="Quantity">
                                 </div>
                             </div>
                         </div>
