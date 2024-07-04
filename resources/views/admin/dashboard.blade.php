@@ -94,6 +94,7 @@
                     <th>Hotel Name</th>
                     <th>Product Name</th>
                     <th>Date and Time</th>
+                    <th>Price</th>
                 </tr>
             </thead>
             <tbody>
@@ -104,6 +105,7 @@
                         <td>{{ $reservation->product->hotel->name }}</td>
                         <td>{{ $reservation->product->name }}</td>
                         <td>{{ $reservation->tanggal_jam }}</td>
+                        <td>{{ 'Rp ' . number_format($reservation->product->price, 0, ',', '.') . ',00' }}</td>
                     </tr>
                 @endforeach
             </tbody>
