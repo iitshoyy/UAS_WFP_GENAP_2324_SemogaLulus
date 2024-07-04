@@ -84,6 +84,30 @@
                 @endforeach
             </tbody>
         </table>
+
+        <h2>Reservations in the Last Week</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Customer Name</th>
+                    <th>Hotel Name</th>
+                    <th>Product Name</th>
+                    <th>Date and Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($reservations as $index => $reservation)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $reservation->user->name }}</td>
+                        <td>{{ $reservation->product->hotel->name }}</td>
+                        <td>{{ $reservation->product->name }}</td>
+                        <td>{{ $reservation->tanggal_jam }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 
     <!-- Detail Modal -->

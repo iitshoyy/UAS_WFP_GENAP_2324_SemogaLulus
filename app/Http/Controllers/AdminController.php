@@ -9,12 +9,14 @@ use App\Models\Reservasi;
 use App\Models\Transaction;
 use App\Models\Type;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    function getDashboardAdmin(){
+    function getDashboardAdmin()
+    {
         $topCustomers = User::select('users.id', 'users.name', DB::raw('COUNT(reservasis.id) as reservations_count'))
             ->join('reservasis', 'reservasis.user_id', '=', 'users.id')
             ->groupBy('users.id', 'users.name')
@@ -38,7 +40,17 @@ class AdminController extends Controller
             ->orderBy('reservations_count', 'desc')
             ->take(10)
             ->get();
-        return view('admin.dashboard',compact('topCustomers', 'topHotels', 'topProducts'));
+
+        $now = Carbon::now();
+
+        // Get the date and time one week ago
+        $oneWeekAgo = $now->subWeek();
+
+        // Fetch reservations created within the last week
+        $reservations = Reservasi::where('tanggal_jam', '>=', $oneWeekAgo)
+            ->with(['user', 'product.hotel']) // eager load related models
+            ->get();
+        return view('admin.dashboard', compact('topCustomers', 'topHotels', 'topProducts','reservations'));
     }
     public function getCustomerDetails($id)
     {
@@ -56,7 +68,7 @@ class AdminController extends Controller
     public function getHotelDetails($id)
     {
         $hotel = Hotel::findOrFail($id);
-        $reservations = Reservasi::whereHas('product', function($query) use ($id) {
+        $reservations = Reservasi::whereHas('product', function ($query) use ($id) {
             $query->where('hotel_id', $id);
         })->with(['user', 'product'])->get();
 
@@ -79,7 +91,8 @@ class AdminController extends Controller
         ]);
     }
 
-    public function getHotels(){
+    public function getHotels()
+    {
         $hotels = Hotel::all();
         $types = Type::all();
         return view('admin.listHotel', compact('hotels', 'types'));
@@ -109,29 +122,30 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Type added successfully');
     }
 
-    public function getTransactions(){
+    public function getTransactions()
+    {
         $transactions = Transaction::all();
         return view('admin.listTransaction', compact('transactions'));
     }
-    public function getTransactionDetails(Request $request){
-        try{
+    public function getTransactionDetails(Request $request)
+    {
+        try {
             $transaction = Transaction::with(['reservasis.product.hotel'])->find($request->id);
             $reservations = $transaction->reservasis;
             return response()->json([
                 'transaction' => $transaction,
                 'reservations' => $reservations
             ]);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $e->getMessage();
-
         }
-
     }
-    public function getProduks(){
+    public function getProduks()
+    {
         $products = Product::with('productType')->get();
         $productTypes = ProductType::all();
         $hotels = Hotel::all();
-        return view('admin.listProduct', compact('products', 'productTypes','hotels'));
+        return view('admin.listProduct', compact('products', 'productTypes', 'hotels'));
     }
     public function storeProduct(Request $request)
     {
@@ -156,7 +170,8 @@ class AdminController extends Controller
         ProductType::create($request->all());
         return redirect()->back()->with('success', 'Product type created successfully.');
     }
-    public function getCustomer(){
+    public function getCustomer()
+    {
         $customers = User::all();
         return view('admin.listCustomer', compact('customers'));
     }
